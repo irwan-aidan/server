@@ -785,10 +785,6 @@ mkdir -p /var/lib/GeoIP
 wget -O /var/lib/GeoIP/GeoLite2-City.mmdb.gz "https://github.com/korn-sudo/Project-Fog/raw/main/files/panel/GeoLite2-City.mmdb.gz"
 gzip -d /var/lib/GeoIP/GeoLite2-City.mmdb.gz
 
-# Setting template's correct name,IP address and nginx Port
- sed -i "s|NGINXPORT|$Nginx_Port|g" /home/vps/public_html/projectfog.html
- sed -i "s|IP-ADDRESS|$IPADDR|g" /home/vps/public_html/projectfog.html
-
  # Restarting nginx service
  systemctl restart nginx
  
