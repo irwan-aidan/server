@@ -85,33 +85,11 @@ MyVPS_Time='Asia/Kuala_Lumpur'
 
  # Removing all existing openvpn server files
  rm -rf /etc/openvpn/*
-
-# Install OpenVPN dan Easy-RSA
-apt install openvpn easy-rsa unzip -y
-apt install openssl iptables iptables-persistent -y
-mkdir -p /etc/openvpn/server/easy-rsa/
-cd /etc/openvpn/
-wget https://raw.githubusercontent.com/fsidvpn/sc/main/vpn.zip
-unzip vpn.zip
-rm -f vpn.zip
-chown -R root:root /etc/openvpn/server/easy-rsa/
-cd
-
-###install tcp cond ###
-
-cd /usr/share/easy-rsa
-./easyrsa --batch init-pki
-./easyrsa --batch build-ca nopass
-./easyrsa --batch gen-dh
-./easyrsa --batch build-server-full server nopass
-cp -R /usr/share/easy-rsa/pki /etc/openvpn/ && cd
-
-[[ -d /etc/openvpn/server ]] && rm -d /etc/openvpn/server
-
-echo "# ----------------------------
-# OVPN SERVER-TCP CONFIG
-# ----------------------------
-port 1720
+ # Creating server.conf, ca.crt, server.crt and server.key
+ # Creating server.conf, ca.crt, server.crt and server.key
+ cat <<'myOpenVPNconf' > /etc/openvpn/server_tcp.conf
+# OpenVPN TCP
+port OVPNTCP
 proto tcp
 dev tun
 sndbuf 0 
@@ -150,12 +128,12 @@ ncp-disable
 cipher none
 auth none
 duplicate-cn
-max-clients 50username-as-common-name" > /etc/openvpn/server_tcp.conf
+max-clients 50
+myOpenVPNconf
 
-echo "# ----------------------------
-# OVPN SERVER-UDP CONFIG
-# ----------------------------
-port 3900
+cat <<'myOpenVPNconf2' > /etc/openvpn/server_udp.conf
+# OpenVPN UDP
+port OVPNUDP
 proto udp
 dev tun
 sndbuf 0 
@@ -194,8 +172,10 @@ ncp-disable
 cipher none
 auth none
 duplicate-cn
-max-clients 50username-as-common-name" > /etc/openvpn/server_udp.conf
+max-clients 50
+myOpenVPNconf2
 
+cat <<'myOpenVPNconf3' > /etc/openvpn/server_tls.conf
 echo "# ----------------------------
 # OVPN SERVER-TLS CONFIG
 # ----------------------------
@@ -240,6 +220,7 @@ auth none
 duplicate-cn
 max-clients 50
 username-as-common-name" > /etc/openvpn/server_tls.conf
+myOpenVPNconf3
 
 cat <<'EOF7'> /etc/openvpn/ca.crt
 -----BEGIN CERTIFICATE-----
@@ -405,7 +386,9 @@ BPpTD8iMAXYLPgahpq11/ZCVlHxi7i3Oed2YPd2TrET4Lm8Sbh33eKhxBSThooox
 -----END DH PARAMETERS-----
 EOF13
 
-echo "# ----------------------------
+# Default TCP
+cat <<Config1> /home/vps/public_html/TCP.ovpn
+# ----------------------------
 # OVPN CLIENT-TCP CONFIG
 # ----------------------------
 client
@@ -439,13 +422,15 @@ mute 20
 ;http-proxy-option CUSTOM-HEADER Host HOSTNAME
 auth-user-pass" > /etc/openvpn/client/client-tcp.ovpn
 
-echo "" >> /etc/openvpn/client/client-tcp.ovpn
-echo "<ca>" >> /etc/openvpn/client/client-tcp.ovpn
-cat /etc/openvpn/pki/ca.crt >> /etc/openvpn/client/client-tcp.ovpn
-echo "</ca>" >> /etc/openvpn/client/client-tcp.ovpn
-cp /etc/openvpn/client/client-tcp.ovpn /var/www/html/client-tcp.ovpn
+<ca>
+$(cat /etc/openvpn/ca.crt)
+</ca>
 
-echo "# ----------------------------
+Config1
+
+# Default UDP
+cat <<Config2> /home/vps/public_html/UDP.ovpn
+# ----------------------------
 # OVPN CLIENT-UDP CONFIG
 # ----------------------------
 client
@@ -471,15 +456,15 @@ nice -20
 reneg-sec 0
 redirect-gateway def1
 setenv CLIENT_CERT 0
-auth-user-pass" > /etc/openvpn/client/client-udp.ovpn
 
-echo "" >> /etc/openvpn/client/client-udp.ovpn
-echo "<ca>" >> /etc/openvpn/client/client-udp.ovpn
-cat /etc/openvpn/pki/ca.crt >> /etc/openvpn/client/client-udp.ovpn
-echo "</ca>" >> /etc/openvpn/client/client-udp.ovpn
-cp /etc/openvpn/client/client-udp.ovpn /var/www/html/client-udp.ovpn
+<ca>
+$(cat /etc/openvpn/ca.crt)
+</ca>
+Config2
 
-echo "# cipher none
+# Default ssl
+cat <<Config3> /home/vps/public_html/ssl.ovpn
+
 ----------------------------
 # OVPN CLIENT-TLS CONFIG
 # ----------------------------
@@ -500,40 +485,12 @@ cipher none
 comp-lzo
 verb 3
 mute 20
-auth-user-pass" >/etc/openvpn/client/client-tls.ovpn
+setenv CLIENT_CERT 0
 
-echo "" >> /etc/openvpn/client/client-tls.ovpn
-echo "<ca>" >> /etc/openvpn/client/client-tls.ovpn
-cat /etc/openvpn/pki/ca.crt >> /etc/openvpn/client/client-tls.ovpn
-echo "</ca>" >> /etc/openvpn/client/client-tls.ovpn
-cp /etc/openvpn/client/client-tls.ovpn /var/www/html/client-tls.ovpn
-
-# pada tulisan xxx ganti dengan alamat ip address VPS anda 
-/etc/init.d/openvpn restart
-
-# masukkan certificatenya ke dalam config client TCP 1194
-echo '<ca>' >> /etc/openvpn/client-tcp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/client-tcp.ovpn
-echo '</ca>' >> /etc/openvpn/client-tcp.ovpn
-
-# Copy config OpenVPN client ke home directory root agar mudah didownload ( TCP 1194 )
-cp /etc/openvpn/client-tcp.ovpn /home/vps/public_html/client-tcp.ovpn
-
-# masukkan certificatenya ke dalam config client UDP 2200
-echo '<ca>' >> /etc/openvpn/client-udp.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/client-udp.ovpn
-echo '</ca>' >> /etc/openvpn/client-udp.ovpn
-
-# Copy config OpenVPN client ke home directory root agar mudah didownload ( UDP 2200 )
-cp /etc/openvpn/client-udp.ovpn /home/vps/public_html/client-udp.ovpn
-
-# masukkan certificatenya ke dalam config client SSL
-echo '<ca>' >> /etc/openvpn/client-tls.ovpn
-cat /etc/openvpn/server/ca.crt >> /etc/openvpn/client/client-tls.ovpn
-echo '</ca>' >> /etc/openvpn/client/client-tls.ovpn
-
-# Copy config OpenVPN client ke home directory root agar mudah didownload ( SSL )
-cp /etc/openvpn/client/client-tls.ovpn /home/vps/public_html/client-tls.ovpn
+<ca>
+$(cat /etc/openvpn/ca.crt)
+</ca>
+Config3
 
 # Creating a New update message in server.conf
  cat <<'NUovpn' > /etc/openvpn/server.conf
@@ -748,6 +705,7 @@ sed -i "s|NXPort|$Nginx_Port|g" /home/vps/public_html/index.php
 
 service nginx restart
 
+apt -y install git gcc nginx uwsgi uwsgi-plugin-python3 virtualenv python3-dev libgeoip-dev geoip-database geoip-database-extra
 
 # Setting Up OpenVPN monitoring
 wget -O /srv/openvpn-monitor.zip "https://github.com/korn-sudo/Project-Fog/raw/main/files/panel/openvpn-monitor.zip"
@@ -755,7 +713,7 @@ cd /srv
 unzip -qq openvpn-monitor.zip
 rm -f openvpn-monitor.zip
 cd openvpn-monitor
-virtualenv .
+virtualenv -p python3 .
 . bin/activate
 pip install -r requirements.txt
 
@@ -770,7 +728,7 @@ cat <<'myMonitorINI' > /etc/uwsgi/apps-available/openvpn-monitor.ini
 base = /srv
 project = openvpn-monitor
 logto = /var/log/uwsgi/app/%(project).log
-plugins = python
+plugins = python3
 chdir = %(base)/%(project)
 virtualenv = %(chdir)
 module = openvpn-monitor:application
@@ -795,7 +753,6 @@ gzip -d /var/lib/GeoIP/GeoLite2-City.mmdb.gz
 
 chown -R www-data:www-data /home/vps/public_html
 
-}
 
 function ip_address(){
   local IP="$( ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egrep -v "^192\.168|^172\.1[6-9]\.|^172\.2[0-9]\.|^172\.3[0-2]\.|^10\.|^127\.|^255\.|^0\." | head -n 1 )"
