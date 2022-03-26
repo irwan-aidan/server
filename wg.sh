@@ -2,6 +2,9 @@
 # Debian 9 & 10 64bit
 # Ubuntu 18.04 & 20.04 bit
 # Centos 7 & 8 64bit 
+# By geo
+# ==================================================
+
 
 # Check OS version
 if [[ -e /etc/debian_version ]]; then
@@ -20,7 +23,7 @@ if [[ -e /etc/wireguard/params ]]; then
 	exit 1
 fi
 
-echo -e "${Info} Wireguard VPS AutoScript by KaizenVPN"
+echo -e "${Info} Wireguard VPS AutoScript by geo gabut"
 # Detect public IPv4 address and pre-fill for the user
 
 # Detect public interface and pre-fill for the user
@@ -86,10 +89,10 @@ WG_RUNNING=$?
 
 # Tambahan
 cd /usr/bin
-wget -O add-wg "https://raw.githubusercontent.com/Apeachsan91/server/main/add-wg.sh"
-wget -O del-wg "https://raw.githubusercontent.com/Apeachsan91/server/main/del-wg.sh"
-wget -O cek-wg "https://raw.githubusercontent.com/Apeachsan91/server/main/cek-wg.sh"
-wget -O renew-wg "https://raw.githubusercontent.com/Apeachsan91/server/main/renew-wg.sh"
+wget -O add-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/add-wg.sh"
+wget -O del-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/del-wg.sh"
+wget -O cek-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cek-wg.sh"
+wget -O renew-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/renew-wg.sh"
 chmod +x add-wg
 chmod +x del-wg
 chmod +x cek-wg

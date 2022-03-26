@@ -3,6 +3,8 @@ red='\e[1;31m'
 green='\e[0;32m'
 NC='\e[0m'
 MYIP=$(wget -qO- icanhazip.com);
+echo "Checking VPS"
+clear
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[Installed]${Font_color_suffix}"
 Error="${Red_font_prefix}[Not Installed]${Font_color_suffix}"
@@ -26,7 +28,7 @@ clear
 echo ""
 echo " Done Install Webmin"
 echo " $IP:10000"
-echo " AutoScriptVPS By  KaizenVPN"
+echo " AutoScriptVPS By  geo"
 }
 function restart () {
 echo " Restarting Webmin"
@@ -36,7 +38,7 @@ echo " Start Uninstall Webmin"
 clear
 echo ""
 echo " Done Restart Webmin"
-echo " AutoScriptVPS By  KaizenVPN"
+echo " AutoScriptVPS By  geo"
 }
 function uninstall () {
 echo " Removing Repositori Webmin"
@@ -49,7 +51,7 @@ apt autoremove --purge webmin -y > /dev/null 2>&1
 clear
 echo ""
 echo " Done Uninstall Webmin"
-echo " AutoScriptVPS By  KaizenVPN"
+echo " AutoScriptVPS By  geo"
 }
 if [[ "$cek" = "perl" ]]; then
 sts="${Info}"
@@ -64,7 +66,7 @@ echo -e " Status $sts"
 echo -e "  1. Install Webmin"
 echo -e "  2. Restart Webmin"
 echo -e "  3. Uninstall Webmin"
-echo -e " AutoScriptVPS By  KaizenVPN"
+echo -e " AutoScriptVPS By  geo"
 echo -e " Press CTRL+C to return"
 read -rp " Please Enter The Correct Number : " -e num
 if [[ "$num" = "1" ]]; then

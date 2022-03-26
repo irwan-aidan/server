@@ -3,18 +3,19 @@ import socket, threading, thread, select, signal, sys, time, getopt
 
 # Listen
 LISTENING_ADDR = '0.0.0.0'
-#LISTENING_PORT = sys.argv[1]
-LISTENING_PORT = 2088
-#Pass
+if sys.argv[1:]:
+  LISTENING_PORT = sys.argv[1]
+else:
+  LISTENING_PORT = 1111
+
+# Pass
 PASS = ''
 
 # CONST
 BUFLEN = 4096 * 4
 TIMEOUT = 60
-DEFAULT_HOST = '127.0.0.1:587'
-#RESPONSE = 'HTTP/1.1 101 WebSocket by KaizenVPN\r\n\r\n'
-#RESPONSE = 'HTTP/1.1 101 WebSocket by KaizenVPN\r\nContent-Length: 104857600000\r\n\r\n'
-RESPONSE = 'HTTP/1.1 200 WebSocket by KaizenVPN\r\nContent-length: 0\r\n\r\nHTTP/1.1 200 Connection established\r\n\r\n'  # lint:ok
+DEFAULT_HOST = '127.0.0.1:143'
+RESPONSE = 'HTTP/1.1 101 <h1><i><font color="cyan">NUSA TENGGARA BARAT/font></b>\r\n\r\nContent-Length: 104857600000\r\n\r\n'
 
 class Server(threading.Thread):
     def __init__(self, host, port):
@@ -170,7 +171,7 @@ class ConnectionHandler(threading.Thread):
             host = host[:i]
         else:
             if self.method=='CONNECT':
-                port = 587
+                port = 2096
             else:
                 port = sys.argv[1]
 
@@ -226,7 +227,7 @@ class ConnectionHandler(threading.Thread):
 def print_usage():
     print 'Usage: proxy.py -p <port>'
     print '       proxy.py -b <bindAddr> -p <port>'
-    print '       proxy.py -b 0.0.0.0 -p 8080'
+    print '       proxy.py -b 0.0.0.0 -p 80'
 
 def parse_args(argv):
     global LISTENING_ADDR
