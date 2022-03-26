@@ -11,7 +11,7 @@ apt update && apt upgrade -y --fix-missing && update-grub && sleep 2 && reboot
 
 2. Kemudian jalankan script ini.
 ```sh
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt install -y bzip2 gzip coreutils screen curl && wget https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/setup.sh && chmod +x setup.sh && ./setup.sh  && rm -rf ./setup.sh
+sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt install -y bzip2 gzip coreutils screen curl && wget https://raw.githubusercontent.com/irwan-aidan/server/main/setup.sh && chmod +x setup.sh && ./setup.sh  && rm -rf ./setup.sh
 ```
 
 ```md
