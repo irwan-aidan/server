@@ -25,7 +25,7 @@ email='server@sakai.cf'
 
 
 #Server Name for openvpn config and banner
-ServerName='Aidan-VPN'
+Server-Name='Aidan-VPN'
 
 # OpenSSH Ports
 SSH_Port1='22'
@@ -667,10 +667,11 @@ wget -O /home/vps/public_html/index.php "https://raw.githubusercontent.com/korn-
 
 
 # Setting up our WebServer Ports and IP Addresses
+apt-get install php7.3-{cli,pdo,fpm,zip,gd,xml,mysql,cgi}
 cd
 sleep 1
 
-sed -i "s|/run/php/php7.0-fpm.sock|127.0.0.1:$Php_Socket|g" /etc/php/7.0/fpm/pool.d/www.conf
+sed -i "s|/run/php/php7.3-fpm.sock|127.0.0.1:$Php_Socket|g" /etc/php/7.3/fpm/pool.d/www.conf
 sed -i "s|Php_Socket|$Php_Socket|g" /etc/nginx/conf.d/vps.conf
 sed -i "s|Nginx_Port|$Nginx_Port|g" /etc/nginx/conf.d/vps.conf
 sed -i "s|Fog_Openvpn_Monitoring|$Fog_Openvpn_Monitoring|g" /etc/nginx/conf.d/monitoring.conf
