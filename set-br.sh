@@ -1,7 +1,7 @@
 #!/bin/bash
 curl https://rclone.org/install.sh | bash
 printf "q\n" | rclone config
-wget -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/rclone.conf"
+wget -O /root/.config/rclone/rclone.conf "https://raw.githubusercontent.com/irwan-aidan/server/main/rclone.conf"
 git clone  https://github.com/magnific0/wondershaper.git
 cd wondershaper
 make install
@@ -19,25 +19,28 @@ account default
 host smtp.gmail.com
 port 587
 auth on
-user paoandest@gmail.com
-from paoandest@gmail.com
-password 123 
+user corloussss@gmail.com
+from corloussss@gmail.com
+password vmlpmbagegqzhsqy
 logfile ~/.msmtp.log
 EOF
 chown -R www-data:www-data /etc/msmtprc
 cd /usr/bin
-wget -O autobackup "https://raw.githubusercontent.com/ADITYAH2/halucok/main/autobackup.sh"
-wget -O backup "https://raw.githubusercontent.com/ADITYAH2/halucok/main/backup.sh"
-wget -O bckp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/bckp.sh"
-wget -O restore "https://raw.githubusercontent.com/ADITYAH2/halucok/main/restore.sh"
-wget -O strt "https://raw.githubusercontent.com/ADITYAH2/halucok/main/strt.sh"
-wget -O limit-speed "https://raw.githubusercontent.com/ADITYAH2/halucok/main/limit-speed.sh"
-chmod +x autobackup
-chmod +x backup
+wget -O autobackupemail "https://raw.githubusercontent.com/irwan-aidan/server/main/autobackupemail.sh"
+wget -O autobackupnginx "https://raw.githubusercontent.com/irwan-aidan/server/main/autobackupnginx.sh"
+wget -O backupemail "https://raw.githubusercontent.com/irwan-aidan/server/main/backupemail.sh"
+wget -O backupnginx "https://raw.githubusercontent.com/irwan-aidan/server/main/backupnginx.sh"
+wget -O bckp "https://raw.githubusercontent.com/irwan-aidan/server/main/bckp.sh"
+wget -O restore "https://raw.githubusercontent.com/irwan-aidan/server/main/restore.sh"
+wget -O strt "https://raw.githubusercontent.com/irwan-aidan/server/main/strt.sh"
+wget -O limit-speed "https://raw.githubusercontent.com/irwan-aidan/server/main/limit-speed.sh"
+chmod +x autobackupemail
+chmod +x autobackupnginx
+chmod +x backupemail
+chmod +x backupnginx
 chmod +x bckp
 chmod +x restore
 chmod +x strt
 chmod +x limit-speed
 cd
 rm -f /root/set-br.sh
-
