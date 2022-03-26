@@ -4,11 +4,11 @@ green='\e[0;32m'
 NC='\e[0m'
 MYIP=$(wget -qO- icanhazip.com);
 apt install jq curl -y
-DOMAIN=kaizensystem.xyz
+DOMAIN=sakai.cf  
 sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${sub}.kaizensystem.xyz
-CF_ID=hazboyz@gmail.com
-CF_KEY=4edad025afe10f3c7adeabe95f810c00a1b5f
+SUB_DOMAIN=${sub}.sakai.cf
+CF_ID=irwan@aidan.my   
+CF_KEY=ff3d540666c202facbd936ba3d0d0110
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
 echo "Updating DNS for ${SUB_DOMAIN}..."
