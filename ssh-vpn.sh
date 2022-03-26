@@ -12,16 +12,16 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=ID
-state=Balong
-locality=Samawa
-organization=Tau
-organizationalunit=Lekong
-commonname=Alba
-email=paoandest@gmail.com
+country=MY
+state=Selangor
+locality=Gombak
+organization=vpnku
+organizationalunit=vpnku
+commonname=vpnku
+email=server@vpnku.cf
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/ADITYAH2/halucok/main/password"
+wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/irwan-aidan/server/main/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -88,14 +88,14 @@ apt -y install nginx
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/irwan-aidan/server/main/nginx.conf"
 mkdir -p /home/vps/public_html
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/irwan-aidan/server/main/vps.conf"
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/ADITYAH2/halucok/main/badvpn-udpgw64"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/irwan-aidan/server/main/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -125,7 +125,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 # install squid
 cd
 apt -y install squid3
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/irwan-aidan/server/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
@@ -167,8 +167,8 @@ accept = 777
 connect = 127.0.0.1:22
 
 [openvpn]
-accept = 442
-connect = 127.0.0.1:1194
+accept = 445
+connect = 127.0.0.1:1720
 
 END
 
@@ -239,58 +239,58 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
-wget -O add-host "https://raw.githubusercontent.com/ADITYAH2/halucok/main/add-host.sh"
-wget -O about "https://raw.githubusercontent.com/ADITYAH2/halucok/main/about.sh"
-wget -O menu "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu.sh"
-wget -O usernew "https://raw.githubusercontent.com/ADITYAH2/halucok/main/usernew.sh"
-wget -O trial "https://raw.githubusercontent.com/ADITYAH2/halucok/main/trial.sh"
-wget -O hapus "https://raw.githubusercontent.com/ADITYAH2/halucok/main/hapus.sh"
-wget -O member "https://raw.githubusercontent.com/ADITYAH2/halucok/main/member.sh"
-wget -O delete "https://raw.githubusercontent.com/ADITYAH2/halucok/main/delete.sh"
-wget -O cek "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cek.sh"
-wget -O restart "https://raw.githubusercontent.com/ADITYAH2/halucok/main/restart.sh"
-wget -O speedtest "https://raw.githubusercontent.com/ADITYAH2/halucok/main/speedtest_cli.py"
-wget -O info "https://raw.githubusercontent.com/ADITYAH2/halucok/main/info.sh"
-wget -O ram "https://raw.githubusercontent.com/ADITYAH2/halucok/main/ram.sh"
-wget -O renew "https://raw.githubusercontent.com/ADITYAH2/halucok/main/renew.sh"
-wget -O autokill "https://raw.githubusercontent.com/ADITYAH2/halucok/main/autokill.sh"
-wget -O ceklim "https://raw.githubusercontent.com/ADITYAH2/halucok/main/ceklim.sh"
-wget -O tendang "https://raw.githubusercontent.com/ADITYAH2/halucok/main/tendang.sh"
-wget -O change-port "https://raw.githubusercontent.com/ADITYAH2/halucok/main/change.sh"
-wget -O port-ovpn "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ovpn.sh"
-wget -O port-ssl "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ssl.sh"
-wget -O port-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-wg.sh"
-wget -O port-tr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-tr.sh"
-wget -O port-sstp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-sstp.sh"
-wget -O port-squid "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-squid.sh"
-wget -O port-ws "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ws.sh"
-wget -O port-vless "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-vless.sh"
-wget -O wbmn "https://raw.githubusercontent.com/ADITYAH2/halucok/main/webmin.sh"
-wget -O /usr/bin/clear-log https://raw.githubusercontent.com/ADITYAH2/halucok/main/clear-log && chmod +x /usr/bin/clear-log && cd /usr/bin && apt install -y dos2unix && dos2unix clear-log
-wget -O xp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/xp.sh"
-wget -O /usr/bin/user-limit https://raw.githubusercontent.com/ADITYAH2/halucok/main/user-limit.sh && chmod +x /usr/bin/user-limit
-#wget -O /usr/bin/paket https://halucok.me/menu-all/paket.sh && chmod +x /usr/bin/paket.sh
-wget -O cfd "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cfd.sh"
-wget -O cff "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cff.sh"
-wget -O cfh "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cfh.sh"
-wget -O autoreboot "https://raw.githubusercontent.com/ADITYAH2/halucok/main/autoreboot.sh"
-wget -O bannerku "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/bannerku"
-wget -O bbr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/bbr.sh"
-wget -O menu "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/menu.sh"
-wget -O trojaan "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/trojaan.sh"
-wget -O vleess "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/vleess.sh"
-wget -O wgr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/wgr.sh"
-wget -O l2tp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/l2tp.sh"
-wget -O v2raay "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/v2raay.sh"
-wget -O ssh "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/ssh.sh"
-wget -O sstpp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/sstpp.sh"
-wget -O ssssr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/ssssr.sh"
-wget -O add-trgo "https://raw.githubusercontent.com/ADITYAH2/halucok/main/trgo/add-trgo.sh"
-#wget -O del-trgo "https://halucok.me/trgo/del-trgo"
-#wget -O cek-trgo "https://halucok.me/trgo/cek-trgo"
-#wget -O renew-trgo "https://halucok.me/trgo/renew-trgo"
-#wget -O trojangoo "https://halucok.me/trgo/trojangoo.sh"
-#wget -O add-trgo "https://halucok.me/trgo/add-trgo.sh"
+wget -O add-host "https://raw.githubusercontent.com/irwan-aidan/server/main/add-host.sh"
+wget -O about "https://raw.githubusercontent.com/irwan-aidan/server/main/about.sh"
+wget -O menu "https://raw.githubusercontent.com/irwan-aidan/server/main/menu.sh"
+wget -O usernew "https://raw.githubusercontent.com/irwan-aidan/server/main/usernew.sh"
+wget -O trial "https://raw.githubusercontent.com/irwan-aidan/server/main/trial.sh"
+wget -O hapus "https://raw.githubusercontent.com/irwan-aidan/server/main/hapus.sh"
+wget -O member "https://raw.githubusercontent.com/irwan-aidan/server/main/member.sh"
+wget -O delete "https://raw.githubusercontent.com/irwan-aidan/server/main/delete.sh"
+wget -O cek "https://raw.githubusercontent.com/irwan-aidan/server/main/cek.sh"
+wget -O restart "https://raw.githubusercontent.com/irwan-aidan/server/main/restart.sh"
+wget -O speedtest "https://raw.githubusercontent.com/irwan-aidan/server/main/speedtest_cli.py"
+wget -O info "https://raw.githubusercontent.com/irwan-aidan/server/main/info.sh"
+wget -O ram "https://raw.githubusercontent.com/irwan-aidan/server/main/ram.sh"
+wget -O renew "https://raw.githubusercontent.com/irwan-aidan/server/main/renew.sh"
+wget -O autokill "https://raw.githubusercontent.com/irwan-aidan/server/main/autokill.sh"
+wget -O ceklim "https://raw.githubusercontent.com/irwan-aidan/server/main/ceklim.sh"
+wget -O tendang "https://raw.githubusercontent.com/irwan-aidan/server/main/tendang.sh"
+wget -O change-port "https://raw.githubusercontent.com/irwan-aidan/server/main/change.sh"
+wget -O port-ovpn "https://raw.githubusercontent.com/irwan-aidan/server/main/port-ovpn.sh"
+wget -O port-ssl "https://raw.githubusercontent.com/irwan-aidan/server/main/port-ssl.sh"
+wget -O port-wg "https://raw.githubusercontent.com/irwan-aidan/server/main/port-wg.sh"
+wget -O port-tr "https://raw.githubusercontent.com/irwan-aidan/server/main/port-tr.sh"
+wget -O port-sstp "https://raw.githubusercontent.com/irwan-aidan/server/main/port-sstp.sh"
+wget -O port-squid "https://raw.githubusercontent.com/irwan-aidan/server/main/port-squid.sh"
+wget -O port-ws "https://raw.githubusercontent.com/irwan-aidan/server/main/port-ws.sh"
+wget -O port-vless "https://raw.githubusercontent.com/irwan-aidan/server/main/port-vless.sh"
+wget -O wbmn "https://raw.githubusercontent.com/irwan-aidan/server/main/webmin.sh"
+wget -O /usr/bin/clear-log https://raw.githubusercontent.com/irwan-aidan/server/main/clear-log && chmod +x /usr/bin/clear-log && cd /usr/bin && apt install -y dos2unix && dos2unix clear-log
+wget -O xp "https://raw.githubusercontent.com/irwan-aidan/server/main/xp.sh"
+wget -O /usr/bin/user-limit https://raw.githubusercontent.com/irwan-aidan/server/main/user-limit.sh && chmod +x /usr/bin/user-limit
+wget -O /usr/bin/paket https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/paket.sh && chmod +x /usr/bin/paket.sh
+wget -O cfd "https://raw.githubusercontent.com/irwan-aidan/server/main/cfd.sh"
+wget -O cff "https://raw.githubusercontent.com/irwan-aidan/server/main/cff.sh"
+wget -O cfh "https://raw.githubusercontent.com/irwan-aidan/server/main/cfh.sh"
+wget -O autoreboot "https://raw.githubusercontent.com/irwan-aidan/server/main/autoreboot.sh"
+wget -O bannerku "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/bannerku"
+wget -O bbr "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/bbr.sh"
+wget -O menu "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/menu.sh"
+wget -O trojaan "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/trojaan.sh"
+wget -O vleess "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/vleess.sh"
+wget -O wgr "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/wgr.sh"
+wget -O l2tp "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/l2tp.sh"
+wget -O v2raay "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/v2raay.sh"
+wget -O ssh "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/ssh.sh"
+wget -O sstpp "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/sstpp.sh"
+wget -O ssssr "https://raw.githubusercontent.com/irwan-aidan/server/main/menu-all/ssssr.sh"
+wget -O add-trgo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/add-trgo.sh"
+wget -O del-trgo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/del-trgo"
+wget -O cek-trgo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/cek-trgo"
+wget -O renew-trgo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/renew-trgo"
+wget -O trojangoo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/trojangoo.sh"
+wget -O add-trgo "https://raw.githubusercontent.com/irwan-aidan/server/main/trgo/add-trgo.sh"
 chmod +x add-host
 chmod +x script-info
 chmod +x menu
