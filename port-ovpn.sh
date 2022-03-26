@@ -3,6 +3,7 @@ red='\e[1;31m'
 green='\e[0;32m'
 NC='\e[0m'
 MYIP=$(wget -qO- icanhazip.com);
+echo "Checking VPS"
 clear
 MYIP=$(wget -qO- icanhazip.com);
 ovpn="$(netstat -nlpt | grep -i openvpn | grep -i 0.0.0.0 | awk '{print $4}' | cut -d: -f2)"
@@ -147,3 +148,4 @@ menu
 echo "Please enter an correct number"
 ;;
 esac
+

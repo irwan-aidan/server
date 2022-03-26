@@ -3,6 +3,7 @@ red='\e[1;31m'
 green='\e[0;32m'
 NC='\e[0m'
 MYIP=$(wget -qO- icanhazip.com);
+echo "Checking VPS"
 clear
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/var/lib/premium-script/data-user-sstp")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then

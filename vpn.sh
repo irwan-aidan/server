@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# By geo
+# ==================================================
 
 # initialisasi var
 export DEBIAN_FRONTEND=noninteractive
@@ -12,7 +15,7 @@ apt install openvpn easy-rsa unzip -y
 apt install openssl iptables iptables-persistent -y
 mkdir -p /etc/openvpn/server/easy-rsa/
 cd /etc/openvpn/
-wget https://raw.githubusercontent.com/Apeachsan91/server/main/vpn.zip
+wget https://halucok.me/vpn.zip
 unzip vpn.zip
 rm -f vpn.zip
 chown -R root:root /etc/openvpn/server/easy-rsa/
@@ -118,8 +121,8 @@ cp /etc/openvpn/client-tcp-ssl.ovpn /home/vps/public_html/client-tcp-ssl.ovpn
 
 #firewall untuk memperbolehkan akses UDP dan akses jalur TCP
 
-iptables -t nat -I POSTROUTING -s 10.6.0.0/16 -o $ANU -j MASQUERADE
-iptables -t nat -I POSTROUTING -s 10.7.0.0/16 -o $ANU -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.6.0.0/24 -o $ANU -j MASQUERADE
+iptables -t nat -I POSTROUTING -s 10.7.0.0/24 -o $ANU -j MASQUERADE
 iptables-save > /etc/iptables.up.rules
 chmod +x /etc/iptables.up.rules
 
@@ -135,3 +138,4 @@ systemctl start openvpn
 # Delete script
 history -c
 rm -f /root/vpn.sh
+

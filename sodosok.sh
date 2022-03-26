@@ -1,4 +1,5 @@
 #!/bin/bash
+#shadowsocks-libev obfs install by geo
 source /etc/os-release
 OS=$ID
 ver=$VERSION_ID
@@ -34,7 +35,7 @@ fi
 echo "Install Shadowsocks-libev Selesai."
 echo "#############################################"
 
-#Server configuration
+#Server konfigurasi
 echo "#############################################"
 echo "Konfigurasi Server."
 cat > /etc/shadowsocks-libev/config.json <<END
@@ -87,10 +88,26 @@ iptables -I INPUT -m state --state NEW -m udp -p udp --dport 2443:3543 -j ACCEPT
 iptables-save > /etc/iptables.up.rules
 ip6tables-save > /etc/ip6tables.up.rules
 cd /usr/bin
-wget -O add-ss "https://raw.githubusercontent.com/Apeachsan91/server/main/add-ss.sh"
-wget -O del-ss "https://raw.githubusercontent.com/Apeachsan91/server/main/del-ss.sh"
-wget -O cek-ss "https://raw.githubusercontent.com/Apeachsan91/server/main/cek-ss.sh"
-wget -O renew-ss "https://raw.githubusercontent.com/Apeachsan91/server/main/renew-ss.sh"
+wget -O add-ss "https://raw.githubusercontent.com/ADITYAH2/halucok/main/add-ss.sh"
+wget -O del-ss "https://raw.githubusercontent.com/ADITYAH2/halucok/main/del-ss.sh"
+wget -O cek-ss "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cek-ss.sh"
+wget -O renew-ss "https://raw.githubusercontent.com/ADITYAH2/halucok/main/renew-ss.sh"
+chmod +x add-ss
+chmod +x del-ss
+chmod +x cek-ss
+chmod +x renew-ss
+cd
+rm -f /root/sodosok.sh
+/etc/shadowsocks-libev/tls.json
+#wget -O /etc/shadowsocks-libev/http.json https://halucok.me/menu-all/http.json && chmod +x /etc/shadowsocks-libev/http.json
+chmod +x add-ss
+chmod +x del-ss
+chmod +x cek-ss
+chmod +x renew-ss
+cd
+rm -f /root/sodosok.sh
+k.me/cek-ss.sh"
+wget -O renew-ss "https://raw.githubusercontent.com/ADITYAH2/halucok/main/renew-ss.sh"
 chmod +x add-ss
 chmod +x del-ss
 chmod +x cek-ss

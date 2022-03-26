@@ -1,5 +1,7 @@
 #!/bin/bash
-# By KaizenVPN
+# By geo
+#
+# ==================================================
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -10,16 +12,16 @@ source /etc/os-release
 ver=$VERSION_ID
 
 #detail nama perusahaan
-country=MY
-state=Kuala-Lumpur
-locality=Wangsa-Maju
-organization=AidanVPN
-organizationalunit=AidanVPN
-commonname=AidanVPN
-email=irwan@aidan.my
+country=ID
+state=Balong
+locality=Samawa
+organization=Tau
+organizationalunit=Lekong
+commonname=Alba
+email=paoandest@gmail.com
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/password"
+wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/ADITYAH2/halucok/main/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -71,7 +73,7 @@ apt-get remove --purge exim4 -y
 apt -y install wget curl
 
 # set time GMT +7
-ln -fs /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
@@ -86,14 +88,14 @@ apt -y install nginx
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/nginx.conf"
 mkdir -p /home/vps/public_html
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/vps.conf"
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/badvpn-udpgw64"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/ADITYAH2/halucok/main/badvpn-udpgw64"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -123,7 +125,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 # install squid
 cd
 apt -y install squid3
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/ADITYAH2/halucok/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
@@ -152,9 +154,13 @@ socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
+[stunnelws]
+accept = 443
+connect = 127.0.0.1:98
+
 [dropbear]
-accept = 587
-connect = 127.0.0.1:109
+accept = 222
+connect = 127.0.0.1:22
 
 [dropbear]
 accept = 777
@@ -177,7 +183,7 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 /etc/init.d/stunnel4 restart
 
 #OpenVPN
-wget https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://halucok.me/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
@@ -210,6 +216,7 @@ echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
 # banner /etc/issue.net
+wget -O /etc/issue.net "https://halucok.me/banner.conf"
 echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
@@ -232,48 +239,62 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
-wget -O add-host "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/add-host.sh"
-wget -O about "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/about.sh"
-wget -O menu "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/menu.sh"
-wget -O add-cff "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/add-cff.sh"
-wget -O add-cfh "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/add-cfh.sh"
-wget -O add-dom "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/add-dom.sh"
-wget -O usernew "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/usernew.sh"
-wget -O user-passwd "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/user-passwd.sh"
-wget -O trial "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/trial.sh"
-wget -O hapus "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/hapus.sh"
-wget -O member "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/member.sh"
-wget -O delete "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/delete.sh"
-wget -O cek "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/cek.sh"
-wget -O restart "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/restart.sh"
-wget -O speedtest "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/speedtest_cli.py"
-wget -O info "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/info.sh"
-wget -O ram "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/ram.sh"
-wget -O renew "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/renew.sh"
-wget -O autokill "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/autokill.sh"
-wget -O ceklim "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/ceklim.sh"
-wget -O tendang "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/tendang.sh"
-wget -O clear-log "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/clear-log.sh"
-wget -O change-port "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/change.sh"
-wget -O port-ovpn "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-ovpn.sh"
-wget -O port-ssl "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-ssl.sh"
-wget -O port-wg "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-wg.sh"
-wget -O port-tr "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-tr.sh"
-wget -O port-sstp "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-sstp.sh"
-wget -O port-squid "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-squid.sh"
-wget -O port-ws "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-ws.sh"
-wget -O port-vless "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/port-vless.sh"
-wget -O wbmn "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/webmin.sh"
-wget -O xp "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/xp.sh"
-wget -O update "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/update.sh"
-#wget -O kernel-updt "https://raw.githubusercontent.com/irwan-aidan/Deb9-10/main/Resources/script/kernel-update.sh"
+wget -O add-host "https://raw.githubusercontent.com/ADITYAH2/halucok/main/add-host.sh"
+wget -O about "https://raw.githubusercontent.com/ADITYAH2/halucok/main/about.sh"
+wget -O menu "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu.sh"
+wget -O usernew "https://raw.githubusercontent.com/ADITYAH2/halucok/main/usernew.sh"
+wget -O trial "https://raw.githubusercontent.com/ADITYAH2/halucok/main/trial.sh"
+wget -O hapus "https://raw.githubusercontent.com/ADITYAH2/halucok/main/hapus.sh"
+wget -O member "https://raw.githubusercontent.com/ADITYAH2/halucok/main/member.sh"
+wget -O delete "https://raw.githubusercontent.com/ADITYAH2/halucok/main/delete.sh"
+wget -O cek "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cek.sh"
+wget -O restart "https://raw.githubusercontent.com/ADITYAH2/halucok/main/restart.sh"
+wget -O speedtest "https://raw.githubusercontent.com/ADITYAH2/halucok/main/speedtest_cli.py"
+wget -O info "https://raw.githubusercontent.com/ADITYAH2/halucok/main/info.sh"
+wget -O ram "https://raw.githubusercontent.com/ADITYAH2/halucok/main/ram.sh"
+wget -O renew "https://raw.githubusercontent.com/ADITYAH2/halucok/main/renew.sh"
+wget -O autokill "https://raw.githubusercontent.com/ADITYAH2/halucok/main/autokill.sh"
+wget -O ceklim "https://raw.githubusercontent.com/ADITYAH2/halucok/main/ceklim.sh"
+wget -O tendang "https://raw.githubusercontent.com/ADITYAH2/halucok/main/tendang.sh"
+wget -O change-port "https://raw.githubusercontent.com/ADITYAH2/halucok/main/change.sh"
+wget -O port-ovpn "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ovpn.sh"
+wget -O port-ssl "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ssl.sh"
+wget -O port-wg "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-wg.sh"
+wget -O port-tr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-tr.sh"
+wget -O port-sstp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-sstp.sh"
+wget -O port-squid "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-squid.sh"
+wget -O port-ws "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-ws.sh"
+wget -O port-vless "https://raw.githubusercontent.com/ADITYAH2/halucok/main/port-vless.sh"
+wget -O wbmn "https://raw.githubusercontent.com/ADITYAH2/halucok/main/webmin.sh"
+wget -O /usr/bin/clear-log https://raw.githubusercontent.com/ADITYAH2/halucok/main/clear-log && chmod +x /usr/bin/clear-log && cd /usr/bin && apt install -y dos2unix && dos2unix clear-log
+wget -O xp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/xp.sh"
+wget -O /usr/bin/user-limit https://raw.githubusercontent.com/ADITYAH2/halucok/main/user-limit.sh && chmod +x /usr/bin/user-limit
+#wget -O /usr/bin/paket https://halucok.me/menu-all/paket.sh && chmod +x /usr/bin/paket.sh
+wget -O cfd "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cfd.sh"
+wget -O cff "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cff.sh"
+wget -O cfh "https://raw.githubusercontent.com/ADITYAH2/halucok/main/cfh.sh"
+wget -O autoreboot "https://raw.githubusercontent.com/ADITYAH2/halucok/main/autoreboot.sh"
+wget -O bannerku "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/bannerku"
+wget -O bbr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/bbr.sh"
+wget -O menu "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/menu.sh"
+wget -O trojaan "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/trojaan.sh"
+wget -O vleess "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/vleess.sh"
+wget -O wgr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/wgr.sh"
+wget -O l2tp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/l2tp.sh"
+wget -O v2raay "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/v2raay.sh"
+wget -O ssh "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/ssh.sh"
+wget -O sstpp "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/sstpp.sh"
+wget -O ssssr "https://raw.githubusercontent.com/ADITYAH2/halucok/main/menu-all/ssssr.sh"
+wget -O add-trgo "https://raw.githubusercontent.com/ADITYAH2/halucok/main/trgo/add-trgo.sh"
+#wget -O del-trgo "https://halucok.me/trgo/del-trgo"
+#wget -O cek-trgo "https://halucok.me/trgo/cek-trgo"
+#wget -O renew-trgo "https://halucok.me/trgo/renew-trgo"
+#wget -O trojangoo "https://halucok.me/trgo/trojangoo.sh"
+#wget -O add-trgo "https://halucok.me/trgo/add-trgo.sh"
 chmod +x add-host
+chmod +x script-info
 chmod +x menu
-chmod +x add-cff
-chmod +x add-cfh
-chmod +x add-dom
 chmod +x usernew
-chmod +x user-passwd
 chmod +x trial
 chmod +x hapus
 chmod +x member
@@ -288,7 +309,7 @@ chmod +x tendang
 chmod +x ceklim
 chmod +x ram
 chmod +x renew
-#chmod +x clear-log
+chmod +x clear-log
 chmod +x change-port
 chmod +x port-ovpn
 chmod +x port-ssl
@@ -299,11 +320,28 @@ chmod +x port-squid
 chmod +x port-ws
 chmod +x port-vless
 chmod +x wbmn
+chmod +x clear-log
 chmod +x xp
-chmod +x update
-#chmod +x kernel-updt
+chmod +x cfd
+chmod +x cff
+chmod +x cfh
+chmod +x running
+chmod +x ingfo
+chmod +x autoreboot
+chmod +x bannerku
+chmod +x bbr
+chmod +x menu
+chmod +x trojaan
+chmod +x vleess
+chmod +x wgr
+chmod +x l2tp
+chmod +x v2raay
+chmod +x ssh
+chmod +x sstpp
+chmod +x ssssr
+#chmod +x add-trgo
 echo "0 5 * * * root clear-log && reboot" >> /etc/crontab
-echo "0 0 * * * root xp && delete" >> /etc/crontab
+echo "0 0 * * * root xp" >> /etc/crontab
 # remove unnecessary files
 cd
 apt autoclean -y
@@ -315,8 +353,7 @@ apt-get -y remove sendmail*
 apt autoremove -y
 # finishing
 cd
-#mkdir -p /home/vps/public_html
-#chown -R www-data:www-data /home/vps/public_html
+chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/nginx restart
 /etc/init.d/openvpn restart
 /etc/init.d/cron restart
