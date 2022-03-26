@@ -3,7 +3,7 @@
 # ====================================
 
 # Getting Proxy Template
-wget -q -O /usr/local/bin/edu-ssh https://raw.githubusercontent.com/senowahyu62/freesc/main/proxy-template.py
+wget -q -O /usr/local/bin/edu-ssh https://raw.githubusercontent.com/ADITYAH2/halucok/main/edu/proxy-template.py
 chmod +x /usr/local/bin/edu-ssh
 
 # Installing Service
@@ -58,7 +58,7 @@ systemctl restart edussh-tls
 # =================================
 
 # Getting Ovpn Ws Template
-wget -q -O /usr/local/bin/edu-ovpn https://raw.githubusercontent.com/senowahyu62/freesc/main/edu-op.py
+wget -q -O /usr/local/bin/edu-ovpn https://raw.githubusercontent.com/ADITYAH2/halucok/main/edu/edu-op.py
 chmod +x /usr/local/bin/edu-ovpn
 
 
@@ -95,3 +95,22 @@ echo -e "PORT SSH TLS    : 443"
 echo -e "PORT OVPN WS B  : 2082"
 echo -e "==============================="
 echo -e "Script By GEO GABUT"
+echo -e ""
+echo -e ""
+echo "░██████╗░███████╗░█████╗░
+██╔════╝░██╔════╝██╔══██╗
+██║░░██╗░█████╗░░██║░░██║
+██║░░╚██╗██╔══╝░░██║░░██║
+╚██████╔╝███████╗╚█████╔╝
+░╚═════╝░╚══════╝░╚════╝░
+
+░██████╗░░█████╗░██████╗░██╗░░░██╗████████╗
+██╔════╝░██╔══██╗██╔══██╗██║░░░██║╚══██╔══╝
+██║░░██╗░███████║██████╦╝██║░░░██║░░░██║░░░
+██║░░╚██╗██╔══██║██╔══██╗██║░░░██║░░░██║░░░
+╚██████╔╝██║░░██║██████╦╝╚██████╔╝░░░██║░░░
+░╚═════╝░╚═╝░░╚═╝╚═════╝░░╚═════╝░░░░╚═╝░░░" | lolcat
+echo ""
+echo ""
+echo ""
+echo ""
