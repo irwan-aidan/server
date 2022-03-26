@@ -5,6 +5,7 @@ NC='\e[0m'
 MYIP=$(wget -qO- ifconfig.me/ip);
 echo "Checking VPS"
 clear
+figlet BENGKEL VPS | lolcat -d 5
 echo -e ""
 echo -e "\e[1;32m═════════════════════════════════════════" | lolcat
 echo -e "          \e[1;31m\e[1;31m═[\e[mBengkel VpS\e[1;31m]═\e[m" 
@@ -35,7 +36,7 @@ antitorrent
 bench-network
 ;;
 3)
-editsm
+nano /etc/issue.net
 ;;
 4)
 log-limit
